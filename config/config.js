@@ -9,6 +9,8 @@ const envVarsSchema = Joi.object({
     .default('development'),
   PORT: Joi.number()
     .default(3000),
+  SOCKET: Joi.number()
+    .defualt(4000),
   JWT_SECRET: Joi.string().required()
     .description('JWT Secret required to sign'),
   DB_URI: Joi.string().required()
@@ -34,7 +36,9 @@ const config = {
   mailgun_key: envVars.MAILGUN_KEY,
   s3_key: envVars.AWS_S3_KEY,
   s3_secret: envVars.AWS_S3_SECRET,
-  mongoUri: envVars.MONGODB_URI
+  mongoUri: envVars.MONGODB_URI,
+  socketPort: envVars.IO,
+  mqtt: envVars.MONGO_MOSCA_URI
 };
 
 export default config;
