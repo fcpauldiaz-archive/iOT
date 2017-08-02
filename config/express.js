@@ -29,8 +29,16 @@ const ioServer = server.createServer()
 const io = socket(ioServer);
 
 io.on('connection', (client) => {
-  client.on('event', (data) => {});
-  client.on('disconnect', () => {});
+  client.userid = UUID();
+  console.log('\t socket.io:: player ' + client.userid + ' connected');
+
+  client.on('event', (data) => {
+    console.log('event');
+    client.emit('send_event', data);
+  });
+  client.on('disconnect', () => {
+
+  });
 });
 
 ioServer.listen(config.socketPort);
