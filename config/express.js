@@ -15,6 +15,7 @@ import mosca from 'mosca';
 import helmet from 'helmet';
 import server from 'http';
 import socket from 'socket.io';
+import UUID from 'uuid';
 import winstonInstance from './winston';
 import routes from '../server/v1/routes/index.route';
 import config from './config';
