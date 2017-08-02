@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "mute": [
+      "gulp"
+    ],
+    "unused-ignores": [
+      "mysql2",
+      "crypto",
+      "codecov",
+      "pm2",
+      "babel-core",
+      "babel-register",
+      "passport"
+    ]
+  }
+}
