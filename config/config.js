@@ -37,7 +37,7 @@ const config = {
   s3_key: envVars.AWS_S3_KEY,
   s3_secret: envVars.AWS_S3_SECRET,
   mongoUri: envVars.MONGODB_URI,
-  socketPort: envVars.IO,
+  socketPort: envVars.SOCKET,
   mqtt: envVars.MONGO_MOSCA_URI
 };
 
