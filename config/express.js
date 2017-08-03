@@ -71,9 +71,7 @@ moscaServer.on('published', (packet, client) => {
   console.log('Payload', packet.payload.toString('utf8'));
   console.log('qos', packet.qos);
   console.log('retain', packet.retain);
-  moscaServer.publish(packet, (data) => {
-    console.log(data);
-  });
+  moscaServer.publish(packet, client);
 });
 
 moscaServer.on('ready', () => { console.log('Mosca is running') });
