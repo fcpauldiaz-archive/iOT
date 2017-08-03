@@ -67,7 +67,11 @@ moscaServer.on('clientConnected', (client) => {
 
 // fired when a message is received
 moscaServer.on('published', (packet, client) => {
-  console.log('Published', packet.payload);
+  console.log('Topic', packet.topic);
+  console.log('Payload', packet.payload.toString('utf8'));
+  console.log('qos', packet.qos);
+  console.log('retain', packet.retain);
+  moscaServer.publish(packet, () => {});
 });
 
 moscaServer.on('ready', () => { console.log('Mosca is running') });
