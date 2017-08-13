@@ -1,7 +1,7 @@
 {
-  "name": "gobhash-backend",
+  "name": "iot",
   "version": "1.0.0",
-  "description": "REST API to social network GobHash",
+  "description": "IOT communication protocol",
   "author": "Pablo Díaz <pablodiaz@newtonlabs.com.gt",
   "main": "index.js",
   "private": false,
