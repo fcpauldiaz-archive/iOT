@@ -57,7 +57,7 @@ moscaServer.on('published', (packet, client) => {
   }
 });
 
-moscaServer.on('ready', () => { logger.log('info', 'Mosca is running') });
+moscaServer.on('ready', () => { logger.log('info', 'Mosca is running')} );
 
 function handleDeviceConnected(message, client) {
   logger.log('info', 'device connected status %s', message.payload);
