@@ -51,7 +51,7 @@ moscaServer.on('published', (packet, client) => {
     case 'device/connected':
       return handleDeviceConnected(packet, client);
     case 'device/state':
-      return handleDeviceState(packet);
+      return handleDeviceState(packet, client);
     default:
       return undefined;
   }
@@ -61,11 +61,12 @@ moscaServer.on('ready', () => { logger.log('info', 'Mosca is running')} );
 
 function handleDeviceConnected(message, client) {
   logger.log('info', 'device connected status %s', message.payload);
-  moscaServer.publish({ topic: 'connected/device', payload: 'data payload' }, client);
+  moscaServer.publish({ topic: 'connected/device', payload: JSON.stringify(message) }, client);
 }
 
-function handleDeviceState(message) {
+function handleDeviceState(message, client) {
   logger.log('info', 'device state update to %s', message.payload);
+  moscaServer.publish({ topic: 'state/device', payload: 'data payload' }, client);
 }
 
 const app = express();
