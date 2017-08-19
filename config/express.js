@@ -1,29 +1,15 @@
 import express from 'express';
-import server from 'http';
-import socket from 'socket.io';
-import UUID from 'uuid';
 import mosca from 'mosca';
+import r from 'rethinkdb';
 import logger from './winston';
 import config from './config';
 
-const ioServer = server.createServer();
-const io = socket(ioServer);
-
-io.on('connection', (client) => {
-  client.userid = UUID();
-  logger.log('info', '\t socket.io:: player ' + client.userid + ' connected');
-
-  client.on('event', (data) => {
-    logger.log('info', 'event');
-    client.emit('send_event', data);
-  });
-  client.on('disconnect', () => {
-
-  });
+let connection = null;
+r.connect({ host: '45.55.162.243', port: 28015 }, (err, conn) => {
+  if (err) throw err;
+  connection = conn;
+  connection.use('iot');
 });
-
-ioServer.listen(config.socketPort);
-
 
 const ascoltatore = {
   // using ascoltatore
@@ -57,10 +43,13 @@ moscaServer.on('published', (packet, client) => {
   }
 });
 
-moscaServer.on('ready', () => { logger.log('info', 'Mosca is running')} );
+moscaServer.on('ready', () => { logger.log('info', 'Mosca is running'); });
 
 function handleDeviceConnected(message, client) {
-  logger.log('info', 'device connected status %s', message.payload);
+  // logger.log('info', 'device connected status %s', message.payload);
+  r.table('devices').insert(JSON.parse(message.payload.toString())).run(connection, (err) => {
+    if (err) throw err;
+  });
   moscaServer.publish({ topic: 'connected/device', payload: JSON.stringify(message) }, client);
 }
 
