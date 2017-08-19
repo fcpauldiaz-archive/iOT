@@ -46,8 +46,9 @@ moscaServer.on('published', (packet, client) => {
 moscaServer.on('ready', () => { logger.log('info', 'Mosca is running'); });
 
 function handleDeviceConnected(message, client) {
-  // logger.log('info', 'device connected status %s', message.payload);
-  r.table('devices').insert(JSON.parse(message.payload.toString())).run(connection, (err) => {
+  const arrayInsert = JSON.parse(message.payload.toString());
+  arrayInsert.date = new Date();
+  r.table('devices').insert(arrayInsert).run(connection, (err) => {
     if (err) throw err;
   });
   moscaServer.publish({ topic: 'connected/device', payload: JSON.stringify(message) }, client);
