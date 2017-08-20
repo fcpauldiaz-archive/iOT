@@ -1,8 +1,29 @@
 import express from 'express';
 import mosca from 'mosca';
+import server from 'http';
+import socket from 'socket.io';
+import UUID from 'uuid';
 import r from 'rethinkdb';
 import logger from './winston';
 import config from './config';
+
+const ioServer = server.createServer();
+const io = socket(ioServer);
+
+io.on('connection', (client) => {
+  client.userid = UUID(); //eslint-disable-line
+  logger.log('info', 'socket.io:: player %s connected', client.userid);
+
+  client.on('event', (data) => {
+    client.emit('send_event', data);
+  });
+  client.on('disconnect', () => {
+
+  });
+});
+
+ioServer.listen(config.socketPort);
+
 
 let connection = null;
 r.connect({ host: '45.55.162.243', port: 28015 }, (err, conn) => {
