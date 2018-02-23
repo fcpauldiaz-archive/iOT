@@ -19,7 +19,7 @@ r.connect({ host: '45.55.162.243', port: 28015, user: 'admin', password: '8V6-Zc
 });
 
 
-const broker = mqtt.connect('ws://45.55.162.243:8083');
+const broker = mqtt.connect('mqtt://45.55.162.243:8083');
 
 io.sockets.on('connection', (client) => {
   client.uuid = UUID(); //eslint-disable-line
